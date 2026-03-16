@@ -1,0 +1,443 @@
+[
+    {
+        "id": "tokyo",
+        "name": "東京都",
+        "domain": "www.metro.tokyo.lg.jp",
+        "kana": "とうきょうと",
+        "type": "pref"
+    },
+    {
+        "id": "chiyoda",
+        "name": "千代田区",
+        "domain": "www.city.chiyoda.lg.jp",
+        "kana": "ちよだく",
+        "type": "ward"
+    },
+    {
+        "id": "chuo",
+        "name": "中央区",
+        "domain": "www.city.chuo.lg.jp",
+        "kana": "ちゅうおうく",
+        "type": "ward"
+    },
+    {
+        "id": "minato",
+        "name": "港区",
+        "domain": "www.city.minato.tokyo.jp",
+        "kana": "みなとく",
+        "type": "ward"
+    },
+    {
+        "id": "shinjuku",
+        "name": "新宿区",
+        "domain": "www.city.shinjuku.lg.jp",
+        "kana": "しんじゅくく",
+        "type": "ward"
+    },
+    {
+        "id": "bunkyo",
+        "name": "文京区",
+        "domain": "www.city.bunkyo.lg.jp",
+        "kana": "ぶんきょうく",
+        "type": "ward"
+    },
+    {
+        "id": "taito",
+        "name": "台東区",
+        "domain": "www.city.taito.lg.jp",
+        "kana": "たいとうく",
+        "type": "ward"
+    },
+    {
+        "id": "sumida",
+        "name": "墨田区",
+        "domain": "www.city.sumida.lg.jp",
+        "kana": "すみだく",
+        "type": "ward"
+    },
+    {
+        "id": "koto",
+        "name": "江東区",
+        "domain": "www.city.koto.lg.jp",
+        "kana": "こうとうく",
+        "type": "ward"
+    },
+    {
+        "id": "shinagawa",
+        "name": "品川区",
+        "domain": "www.city.shinagawa.tokyo.jp",
+        "kana": "しながわく",
+        "type": "ward"
+    },
+    {
+        "id": "meguro",
+        "name": "目黒区",
+        "domain": "www.city.meguro.tokyo.jp",
+        "kana": "めぐろく",
+        "type": "ward"
+    },
+    {
+        "id": "ota",
+        "name": "大田区",
+        "domain": "www.city.ota.tokyo.jp",
+        "kana": "おおたく",
+        "type": "ward"
+    },
+    {
+        "id": "setagaya",
+        "name": "世田谷区",
+        "domain": "www.city.setagaya.lg.jp",
+        "kana": "せたがやく",
+        "type": "ward"
+    },
+    {
+        "id": "shibuya",
+        "name": "渋谷区",
+        "domain": "www.city.shibuya.tokyo.jp",
+        "kana": "しぶやく",
+        "type": "ward"
+    },
+    {
+        "id": "nakano",
+        "name": "中野区",
+        "domain": "www.city.tokyo-nakano.lg.jp",
+        "kana": "なかのく",
+        "type": "ward"
+    },
+    {
+        "id": "suginami",
+        "name": "杉並区",
+        "domain": "www.city.suginami.tokyo.jp",
+        "kana": "すぎなみく",
+        "type": "ward"
+    },
+    {
+        "id": "toshima",
+        "name": "豊島区",
+        "domain": "www.city.toshima.lg.jp",
+        "kana": "としまく",
+        "type": "ward"
+    },
+    {
+        "id": "kita",
+        "name": "北区",
+        "domain": "www.city.kita.tokyo.jp",
+        "kana": "きたく",
+        "type": "ward"
+    },
+    {
+        "id": "arakawa",
+        "name": "荒川区",
+        "domain": "www.city.arakawa.tokyo.jp",
+        "kana": "あらかわく",
+        "type": "ward"
+    },
+    {
+        "id": "itabashi",
+        "name": "板橋区",
+        "domain": "www.city.itabashi.tokyo.jp",
+        "kana": "いたばしく",
+        "type": "ward"
+    },
+    {
+        "id": "nerima",
+        "name": "練馬区",
+        "domain": "www.city.nerima.tokyo.jp",
+        "kana": "ねりまく",
+        "type": "ward"
+    },
+    {
+        "id": "adachi",
+        "name": "足立区",
+        "domain": "www.city.adachi.tokyo.jp",
+        "kana": "あだちく",
+        "type": "ward"
+    },
+    {
+        "id": "katsushika",
+        "name": "葛飾区",
+        "domain": "www.city.katsushika.lg.jp",
+        "kana": "かつしかく",
+        "type": "ward"
+    },
+    {
+        "id": "edogawa",
+        "name": "江戸川区",
+        "domain": "www.city.edogawa.lg.jp",
+        "kana": "えどがわく",
+        "type": "ward"
+    },
+    {
+        "id": "hachioji",
+        "name": "八王子市",
+        "domain": "www.city.hachioji.tokyo.jp",
+        "kana": "はちおうじし",
+        "type": "city"
+    },
+    {
+        "id": "tachikawa",
+        "name": "立川市",
+        "domain": "www.city.tachikawa.lg.jp",
+        "kana": "たちかわし",
+        "type": "city"
+    },
+    {
+        "id": "musashino",
+        "name": "武蔵野市",
+        "domain": "www.city.musashino.lg.jp",
+        "kana": "むさしのし",
+        "type": "city"
+    },
+    {
+        "id": "mitaka",
+        "name": "三鷹市",
+        "domain": "www.city.mitaka.lg.jp",
+        "kana": "みたかし",
+        "type": "city"
+    },
+    {
+        "id": "ome",
+        "name": "青梅市",
+        "domain": "www.city.ome.tokyo.jp",
+        "kana": "おうめし",
+        "type": "city"
+    },
+    {
+        "id": "fuchu",
+        "name": "府中市",
+        "domain": "www.city.fuchu.tokyo.jp",
+        "kana": "ふちゅうし",
+        "type": "city"
+    },
+    {
+        "id": "akishima",
+        "name": "昭島市",
+        "domain": "www.city.akishima.lg.jp",
+        "kana": "あきしまし",
+        "type": "city"
+    },
+    {
+        "id": "chofu",
+        "name": "調布市",
+        "domain": "www.city.chofu.tokyo.jp",
+        "kana": "ちょうふし",
+        "type": "city"
+    },
+    {
+        "id": "machida",
+        "name": "町田市",
+        "domain": "www.city.machida.tokyo.jp",
+        "kana": "まちだし",
+        "type": "city"
+    },
+    {
+        "id": "koganei",
+        "name": "小金井市",
+        "domain": "www.city.koganei.lg.jp",
+        "kana": "こがねいし",
+        "type": "city"
+    },
+    {
+        "id": "kodaira",
+        "name": "小平市",
+        "domain": "www.city.kodaira.lg.jp",
+        "kana": "こだいらし",
+        "type": "city"
+    },
+    {
+        "id": "hino",
+        "name": "日野市",
+        "domain": "www.city.hino.lg.jp",
+        "kana": "ひのし",
+        "type": "city"
+    },
+    {
+        "id": "higashimurayama",
+        "name": "東村山市",
+        "domain": "www.city.higashimurayama.tokyo.jp",
+        "kana": "ひがしむらやまし",
+        "type": "city"
+    },
+    {
+        "id": "kokubunji",
+        "name": "国分寺市",
+        "domain": "www.city.kokubunji.tokyo.jp",
+        "kana": "こくぶんじし",
+        "type": "city"
+    },
+    {
+        "id": "kunitachi",
+        "name": "国立市",
+        "domain": "www.city.kunitachi.lg.jp",
+        "kana": "くにたちし",
+        "type": "city"
+    },
+    {
+        "id": "fussa",
+        "name": "福生市",
+        "domain": "www.city.fussa.tokyo.jp",
+        "kana": "ふっさし",
+        "type": "city"
+    },
+    {
+        "id": "komae",
+        "name": "狛江市",
+        "domain": "www.city.komae.tokyo.jp",
+        "kana": "こまえし",
+        "type": "city"
+    },
+    {
+        "id": "higashiyamato",
+        "name": "東大和市",
+        "domain": "www.city.higashiyamato.lg.jp",
+        "kana": "ひがしやまとし",
+        "type": "city"
+    },
+    {
+        "id": "kiyose",
+        "name": "清瀬市",
+        "domain": "www.city.kiyose.lg.jp",
+        "kana": "きよせし",
+        "type": "city"
+    },
+    {
+        "id": "higashikurume",
+        "name": "東久留米市",
+        "domain": "www.city.higashikurume.lg.jp",
+        "kana": "ひがしくるめし",
+        "type": "city"
+    },
+    {
+        "id": "musashimurayama",
+        "name": "武蔵村山市",
+        "domain": "www.city.musashimurayama.lg.jp",
+        "kana": "むさしむらやまし",
+        "type": "city"
+    },
+    {
+        "id": "tama",
+        "name": "多摩市",
+        "domain": "www.city.tama.lg.jp",
+        "kana": "たまし",
+        "type": "city"
+    },
+    {
+        "id": "inagi",
+        "name": "稲城市",
+        "domain": "www.city.inagi.tokyo.jp",
+        "kana": "いなぎし",
+        "type": "city"
+    },
+    {
+        "id": "hamura",
+        "name": "羽村市",
+        "domain": "www.city.hamura.tokyo.jp",
+        "kana": "はむらし",
+        "type": "city"
+    },
+    {
+        "id": "akiruno",
+        "name": "あきる野市",
+        "domain": "www.city.akiruno.tokyo.jp",
+        "kana": "あきるのし",
+        "type": "city"
+    },
+    {
+        "id": "nishitokyo",
+        "name": "西東京市",
+        "domain": "www.city.nishitokyo.lg.jp",
+        "kana": "にしとうきょうし",
+        "type": "city"
+    },
+    {
+        "id": "mizuho",
+        "name": "瑞穂町",
+        "domain": "www.town.mizuho.tokyo.jp",
+        "kana": "みずほまち",
+        "type": "town"
+    },
+    {
+        "id": "hinode",
+        "name": "日の出町",
+        "domain": "www.town.hinode.tokyo.jp",
+        "kana": "ひのでまち",
+        "type": "town"
+    },
+    {
+        "id": "hinohara",
+        "name": "檜原村",
+        "domain": "www.vill.hinohara.tokyo.jp",
+        "kana": "ひのはらむら",
+        "type": "village"
+    },
+    {
+        "id": "okutama",
+        "name": "奥多摩町",
+        "domain": "www.town.okutama.tokyo.jp",
+        "kana": "おくたままち",
+        "type": "town"
+    },
+    {
+        "id": "oshima",
+        "name": "大島町",
+        "domain": "www.town.oshima.tokyo.jp",
+        "kana": "おおしままち",
+        "type": "town"
+    },
+    {
+        "id": "toshima-v",
+        "name": "利島村",
+        "domain": "www.toshimamura.org",
+        "kana": "としまむら",
+        "type": "village"
+    },
+    {
+        "id": "niijima",
+        "name": "新島村",
+        "domain": "www.niijima.com",
+        "kana": "にいじまむら",
+        "type": "village"
+    },
+    {
+        "id": "kouzushima",
+        "name": "神津島村",
+        "domain": "vill.kouzushima.tokyo.jp",
+        "kana": "こうづしまむら",
+        "type": "village"
+    },
+    {
+        "id": "miyake",
+        "name": "三宅村",
+        "domain": "www.vill.miyake.tokyo.jp",
+        "kana": "みやけむら",
+        "type": "village"
+    },
+    {
+        "id": "mikurajima",
+        "name": "御蔵島村",
+        "domain": "www.vill.mikurasima.tokyo.jp",
+        "kana": "みくらじまむら",
+        "type": "village"
+    },
+    {
+        "id": "hachijo",
+        "name": "八丈町",
+        "domain": "www.town.hachijo.tokyo.jp",
+        "kana": "はちじょうまち",
+        "type": "town"
+    },
+    {
+        "id": "aogashima",
+        "name": "青ヶ島村",
+        "domain": "www.vill.aogashima.tokyo.jp",
+        "kana": "あおがしまむら",
+        "type": "village"
+    },
+    {
+        "id": "ogasawara",
+        "name": "小笠原村",
+        "domain": "www.vill.ogasawara.tokyo.jp",
+        "kana": "おがさわらむら",
+        "type": "village"
+    }
+]
