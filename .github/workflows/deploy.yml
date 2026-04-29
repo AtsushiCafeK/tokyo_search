@@ -1,0 +1,60 @@
+# ==============================================================================
+# コード変更時のビルド & FTPデプロイ
+#
+# データ更新（JSON）はさくらサーバー上のcronが行うため、
+# このワークフローはコード（HTML/CSS/JS）が変わった時だけ実行する。
+#
+# GitHub Secrets に以下を登録してください:
+#   NEXT_PUBLIC_GOOGLE_CX  : Google Custom Search Engine ID
+#   FTP_SERVER             : FTPサーバーのホスト名
+#   FTP_USERNAME           : FTPユーザー名
+#   FTP_PASSWORD           : FTPパスワード
+#   FTP_PATH               : デプロイ先パス（例: /home/username/www/）
+# ==============================================================================
+
+name: ビルド & デプロイ
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      # データ更新コミットではビルドしない
+      - 'public/data/**'
+      - 'import_csv/**'
+      - 'import_json/**'
+      - '**.md'
+  workflow_dispatch:  # 手動実行
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 依存パッケージをインストール
+        run: npm ci
+
+      - name: ビルド
+        env:
+          NEXT_PUBLIC_GOOGLE_CX: ${{ secrets.NEXT_PUBLIC_GOOGLE_CX }}
+        run: npm run build
+
+      - name: FTPデプロイ
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_PATH }}
+          # すでに存在するファイルの削除は行わない（データJSONを保護）
+          dangerous-clean-slate: false

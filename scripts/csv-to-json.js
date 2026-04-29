@@ -2,8 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 const CSV_DIR = path.join(__dirname, '../import_csv');
-const JSON_DIR = path.join(__dirname, '../import_json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/mail_keishicho.json');
+// 蓄積マスターは output と同じファイルを自己参照
+const ACCUMULATED_PATH = OUTPUT_PATH;
 
 // RFC 4180準拠のCSVパーサー（日本語・改行込みフィールド対応）
 function parseCsv(content) {
@@ -121,22 +122,15 @@ function loadCsvFiles() {
 }
 
 function loadExistingJson() {
-    const jsonPath = path.join(JSON_DIR, 'mail_keishicho.json');
-    if (!fs.existsSync(jsonPath)) return [];
+    if (!fs.existsSync(ACCUMULATED_PATH)) return [];
 
     try {
-        console.log(`既存JSONを読み込み中: ${path.basename(jsonPath)}`);
-        let content = fs.readFileSync(jsonPath, 'utf8');
-
-        // 末尾の破損（HTMLタグ等）を除去
-        const lastIndex = content.lastIndexOf(']');
-        if (lastIndex !== -1) content = content.substring(0, lastIndex + 1);
-
-        const data = JSON.parse(content);
+        console.log(`蓄積JSONを読み込み中: ${path.basename(ACCUMULATED_PATH)}`);
+        const data = JSON.parse(fs.readFileSync(ACCUMULATED_PATH, 'utf8'));
         console.log(`  → ${data.length} 件読み込み`);
         return data;
     } catch (e) {
-        console.warn(`既存JSONの読み込みをスキップ（エラー: ${e.message}）`);
+        console.warn(`蓄積JSONの読み込みをスキップ（エラー: ${e.message}）`);
         return [];
     }
 }
