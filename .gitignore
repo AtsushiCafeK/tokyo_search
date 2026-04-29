@@ -1,3 +1,7 @@
+# import data (managed on server, not in git)
+/import_csv/
+/import_json/
+
 # dependencies
 /node_modules
 /.pnp

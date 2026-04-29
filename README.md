@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 東京都+全市区町村 行政情報 横断検索
 
-## Getting Started
+東京都および全市区町村（23区・26市・町村）の公式行政サイトを  
+Google Programmable Search Engine (CSE) で一括横断検索できるWebサービス。
 
-First, run the development server:
+## 技術スタック
+
+- **Next.js 16** (App Router) + React 19 + TypeScript 5
+- **Tailwind CSS 4** + shadcn/ui
+- **Google CSE** — 検索ウィジェット埋め込み
+- **静的エクスポート** (`output: 'export'`) — さくらインターネット レンタルサーバーへFTPデプロイ
+
+---
+
+## ローカル開発
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env.local` に Google CSE の ID を設定してください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+NEXT_PUBLIC_GOOGLE_CX=your_cse_id_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いて確認します。
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ビルド & デプロイ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build   # /out に静的ファイルを生成
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`/out` の中身を FTP でサーバーの公開ディレクトリへアップロードします。
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 警視庁メールデータの自動更新
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 仕組み
+
+データ更新（JSON）はさくらサーバー上の cron が担当し、コードのデプロイとは独立して動作します。
+
+```
+【さくらサーバー cron】毎日 6:05 自動実行
+  警視庁オープンデータAPI → CSV取得 → JSONマージ → 公開ディレクトリ直接更新
+```
+
+### データソース
+
+警視庁「メールけいしちょう」オープンデータ  
+https://mail.keishicho.metro.tokyo.lg.jp/opendata/
+
+取得パラメータ: `format=csv`, `sdate=YYYYMMDD`, `edate=YYYYMMDD`
+
+### 蓄積設計
+
+- `data/mail_keishicho.json` を蓄積マスターとして使用
+- 新規CSVを毎日マージ（`send_at` + `subject` をキーに重複除去）
+- 過去データは削除せず積み上げ方式（ソース側でデータが消えても履歴を保持）
+
+---
+
+## サーバー構成
+
+### リポジトリ構成
+
+```
+tokyo_search/
+├── src/
+│   ├── app/                        # Next.js App Router ページ
+│   ├── components/                 # UIコンポーネント
+│   └── data/
+│       └── municipalities.json     # 東京都自治体マスターデータ
+├── public/
+│   └── data/
+│       └── mail_keishicho.json     # 警視庁データ（蓄積マスター）
+├── scripts/
+│   ├── csv-to-json.js              # Node.js版 CSV→JSON変換（ローカル用）
+│   ├── csv_to_json.py              # Python版 CSV→JSON変換（サーバー用）
+│   └── update_keishicho.sh         # cron用 日次更新シェルスクリプト
+├── import_csv/                     # 取り込み元CSVの置き場
+└── import_json/                    # 取り込み元JSON（旧方式、バックアップ用）
+```
+
+### さくらサーバー上の構成
+
+```
+/home/hazimeru/www/tokyo_search/
+├── data/
+│   └── mail_keishicho.json         # 蓄積マスター（cronが毎日更新）
+├── scripts/
+│   ├── update_keishicho.sh         # cron実行スクリプト（chmod 700）
+│   ├── csv_to_json.py              # CSV→JSON変換（chmod 600）
+│   ├── csv_work/                   # 作業用CSV一時置き場（自動生成）
+│   └── logs/
+│       └── update_YYYYMM.log       # 月別実行ログ（自動生成）
+├── index.html                      # ビルド成果物
+├── _next/
+└── ...
+```
+
+### cron 設定（さくらコントロールパネル）
+
+```
+5 6 * * * bash /home/hazimeru/www/tokyo_search/scripts/update_keishicho.sh
+```
+
+---
+
+## npm スクリプト
+
+| コマンド | 内容 |
+|---------|------|
+| `npm run dev` | ローカル開発サーバー起動 |
+| `npm run build` | 静的ファイルを `/out` に生成 |
+| `npm run import-csv` | `import_csv/` のCSVを蓄積JSONにマージ（ローカル用） |
