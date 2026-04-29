@@ -3,6 +3,11 @@
 東京都および全市区町村（23区・26市・町村）の公式行政サイトを  
 Google Programmable Search Engine (CSE) で一括横断検索できるWebサービス。
 
+## 現在の機能
+- 東京都内の都市区町村の公式サイトの横断検索
+- メールけいしちょうDB OPEN DATAの閲覧、市区町村別の集計など
+
+
 ## 技術スタック
 
 - **Next.js 16** (App Router) + React 19 + TypeScript 5
@@ -19,7 +24,7 @@ npm install
 npm run dev
 ```
 
-`.env.local` に Google CSE の ID を設定してください。
+`.env.local` に Google CSE の ID を設定してください。検索エンジンの設定で使います。Googleプログラム可能な検索エンジン: https://programmablesearchengine.google.com/intl/ja_jp/about/ このサイトで検索範囲などを設定しています。
 
 ```env
 NEXT_PUBLIC_GOOGLE_CX=your_cse_id_here
