@@ -40,7 +40,8 @@ NEXT_PUBLIC_GOOGLE_CX=your_cse_id_here
 npm run build   # /out に静的ファイルを生成
 ```
 
-`/out` の中身を FTP でサーバーの公開ディレクトリへアップロードします。
+`/out` の中身を FTP でさくらサーバーの公開ディレクトリへアップロードします。  
+デプロイ先: `/home/hazimeru/www/tokyo_search/`
 
 ---
 
@@ -48,7 +49,7 @@ npm run build   # /out に静的ファイルを生成
 
 ### 仕組み
 
-データ更新（JSON）はさくらサーバー上の cron が担当し、コードのデプロイとは独立して動作します。
+さくらサーバー上の cron が毎日自動実行し、公開ディレクトリの JSON を直接更新します。
 
 ```
 【さくらサーバー cron】毎日 6:05 自動実行
@@ -84,12 +85,10 @@ tokyo_search/
 ├── public/
 │   └── data/
 │       └── mail_keishicho.json     # 警視庁データ（蓄積マスター）
-├── scripts/
-│   ├── csv-to-json.js              # Node.js版 CSV→JSON変換（ローカル用）
-│   ├── csv_to_json.py              # Python版 CSV→JSON変換（サーバー用）
-│   └── update_keishicho.sh         # cron用 日次更新シェルスクリプト
-├── import_csv/                     # 取り込み元CSVの置き場
-└── import_json/                    # 取り込み元JSON（旧方式、バックアップ用）
+└── scripts/
+    ├── csv-to-json.js              # Node.js版 CSV→JSON変換（ローカル用）
+    ├── csv_to_json.py              # Python版 CSV→JSON変換（サーバー用）
+    └── update_keishicho.sh         # cron用 日次更新シェルスクリプト
 ```
 
 ### さくらサーバー上の構成
