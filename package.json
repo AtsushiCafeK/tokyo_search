@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "update-data": "node scripts/cleanup-data.js"
+    "update-data": "node scripts/cleanup-data.js",
+    "import-csv": "node scripts/csv-to-json.js"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
