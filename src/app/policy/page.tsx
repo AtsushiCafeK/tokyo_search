@@ -185,8 +185,7 @@ export default function PolicyPage() {
                             運営者
                         </h2>
                         <p className="text-muted-foreground leading-relaxed">
-                            IT Libero<br />
-                            公式X: <a href="https://x.com/it_hazimeru" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@it_hazimeru</a>
+                            IT Libero
                         </p>
                     </section>
 

@@ -22,7 +22,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '東京都+全市区町村 行政情報 横断検索 | hazimeru.net',
     description: '市区町村と東京都の公式情報をまとめて一括検索',
-    creator: '@it_hazimeru',
   },
   robots: {
     index: true,

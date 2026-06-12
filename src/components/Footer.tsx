@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageSquare, Twitter, ExternalLink } from 'lucide-react';
+import { MessageSquare, ExternalLink } from 'lucide-react';
 
 export function Footer() {
     return (
@@ -17,17 +17,7 @@ export function Footer() {
                     >
                         <MessageSquare className="w-4 h-4" />
                         サービス改善アンケートにご協力ください
-                    </a>
-                    <a
-                        href="https://x.com/it_hazimeru"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-slate-500 hover:text-black hover:underline transition-colors"
-                    >
-                        <Twitter className="w-4 h-4 text-[#1DA1F2]" />
-                        X: @it_hazimeru
-                    </a>
-                </div>
+                    </a>                </div>
 
                 {/* Sub Links */}
                 <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3 text-xs tracking-tight text-slate-500">

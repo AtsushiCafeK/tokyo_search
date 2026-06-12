@@ -31,7 +31,6 @@ const COMPLETED_TASKS = [
     { name: 'サイト公開', progress: 100 },
     { name: '対応地域を東京都全域へ拡大', progress: 100 },
     { name: 'サイトポリシーページ作成', progress: 100 },
-    { name: '公式X（@it_hazimeru）との連携', progress: 100 },
     { name: 'スマホ誘導用QRコードの設置（フッター等）', progress: 100 },
     { name: '地域の自動記憶機能（Cookie/LocalStorage）', progress: 100 },
     { name: '市区町村別 メールけいしちょうDBの実装', progress: 100 }
