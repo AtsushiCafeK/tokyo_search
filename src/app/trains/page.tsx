@@ -15,13 +15,15 @@ import {
 } from '@/components/ui/select';
 import { Footer } from '@/components/Footer';
 import { Navigation } from '@/components/Navigation';
-import { TrainStatus, TrainStatusCategory } from '@/types/train';
+import { TrainStatus, TrainStatusCategory, DelayEventView } from '@/types/train';
 import {
     fetchTrainStatus,
     fetchTrainHistory,
     filterByRailway,
-    filterByPeriod,
+    filterEventsByRailway,
+    filterEventsByPeriod,
     getDelaySummary,
+    getEventSummary,
     getOperators,
     RAILWAYS,
 } from '@/utils/trainApi';
@@ -65,9 +67,18 @@ function formatTime(iso: string): string {
     });
 }
 
+function formatDuration(min: number | null, ongoing: boolean): string {
+    if (ongoing) return '継続中';
+    if (min === null || min < 0) return '—';
+    if (min < 60) return `約${min}分`;
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    return m === 0 ? `約${h}時間` : `約${h}時間${m}分`;
+}
+
 export default function TrainsPage() {
     const [allStatus, setAllStatus] = useState<TrainStatus[]>([]);
-    const [history, setHistory] = useState<TrainStatus[]>([]);
+    const [history, setHistory] = useState<DelayEventView[]>([]);
     const [historyLoaded, setHistoryLoaded] = useState(false);
     const [selectedRailway, setSelectedRailway] = useState('all');
     const [selectedPeriod, setSelectedPeriod] = useState('now');
@@ -91,30 +102,28 @@ export default function TrainsPage() {
     // 履歴は過去期間を初めて選んだときに一度だけ読み込む
     useEffect(() => {
         if (isHistoryMode && !historyLoaded) {
-            fetchTrainHistory().then(({ items }) => {
-                setHistory(items);
+            fetchTrainHistory().then(({ events }) => {
+                setHistory(events);
                 setHistoryLoaded(true);
             });
         }
     }, [isHistoryMode, historyLoaded]);
 
-    // 表示対象の決定
-    let visible: TrainStatus[];
-    let summary: ReturnType<typeof getDelaySummary>;
+    // 現在モード：スナップショットを路線で絞り、乱れのみ／重い順
+    const nowFiltered = filterByRailway(allStatus, selectedRailway);
+    const visibleStatus = (onlyDisrupted ? nowFiltered.filter((s) => !s.isNormal) : nowFiltered)
+        .slice()
+        .sort((a, b) => SEVERITY[a.category] - SEVERITY[b.category]);
 
-    if (isHistoryMode) {
-        const base = filterByPeriod(filterByRailway(history, selectedRailway), selectedPeriod);
-        summary = getDelaySummary(base);
-        // 履歴は新しい順（fetch時に降順済み）
-        visible = base;
-    } else {
-        const filtered = filterByRailway(allStatus, selectedRailway);
-        summary = getDelaySummary(filtered);
-        // 「乱れのみ」トグルON時は平常運転を除外し、重い順に並べる
-        visible = (onlyDisrupted ? filtered.filter((s) => !s.isNormal) : filtered)
-            .slice()
-            .sort((a, b) => SEVERITY[a.category] - SEVERITY[b.category]);
-    }
+    // 履歴モード：イベントを路線・期間で絞る（開始が新しい順は fetch 時に済み）
+    const visibleEvents = filterEventsByPeriod(
+        filterEventsByRailway(history, selectedRailway),
+        selectedPeriod
+    );
+
+    const summary = isHistoryMode
+        ? { ...getEventSummary(visibleEvents), normal: 0 }
+        : getDelaySummary(nowFiltered);
 
     return (
         <main className="min-h-screen bg-slate-50/50 flex flex-col items-center">
@@ -247,9 +256,76 @@ export default function TrainsPage() {
 
                     {(isHistoryMode ? !historyLoaded : !loaded) ? (
                         <div className="py-20 text-center text-slate-400">読み込み中...</div>
-                    ) : visible.length > 0 ? (
+                    ) : isHistoryMode ? (
+                        // ---- 履歴モード：遅延イベント一覧（継続時間・原因つき） ----
+                        visibleEvents.length > 0 ? (
+                            <div className="grid gap-3">
+                                {visibleEvents.map((ev) => {
+                                    const cfg = categoryConfig[ev.maxCategory];
+                                    return (
+                                        <Card
+                                            key={ev.id}
+                                            className="overflow-hidden hover:border-primary/30 transition-colors bg-white border-slate-200"
+                                        >
+                                            <CardHeader className="pt-3 pb-2 px-5">
+                                                <div className="flex justify-between items-start gap-4">
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                                                            <Badge
+                                                                variant="outline"
+                                                                className={`gap-1 font-bold text-[10px] px-1.5 py-0 ${cfg.badge}`}
+                                                            >
+                                                                {cfg.icon}
+                                                                {cfg.label}
+                                                            </Badge>
+                                                            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0 rounded">
+                                                                {ev.operatorName}
+                                                            </span>
+                                                            <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0 rounded">
+                                                                原因: {ev.causeLabel}
+                                                            </span>
+                                                        </div>
+                                                        <CardTitle className="text-base font-extrabold text-slate-800 leading-tight flex items-center gap-2">
+                                                            <span
+                                                                className="inline-block w-1.5 h-4 rounded-sm"
+                                                                style={{ backgroundColor: ev.color ?? '#cbd5e1' }}
+                                                            />
+                                                            {ev.railwayName}
+                                                        </CardTitle>
+                                                    </div>
+                                                    <div className="text-right whitespace-nowrap pt-0.5">
+                                                        <p className="text-[10px] font-mono text-slate-400">
+                                                            {formatTime(ev.startAt)}
+                                                        </p>
+                                                        <p className={`text-xs font-bold ${ev.ongoing ? 'text-orange-500' : 'text-slate-600'}`}>
+                                                            {formatDuration(ev.durationMin, ev.ongoing)}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent className="pt-1 pb-3 px-5 bg-slate-50/20">
+                                                <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                                    {ev.latestText}
+                                                </p>
+                                            </CardContent>
+                                        </Card>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="py-20 text-center space-y-4 bg-white rounded-2xl border border-dashed border-slate-200">
+                                <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-slate-300">
+                                    <Info className="w-8 h-8" />
+                                </div>
+                                <p className="text-slate-500 font-medium">
+                                    この期間・路線に該当する遅延の記録はありません。
+                                </p>
+                            </div>
+                        )
+                    ) : visibleStatus.length > 0 ? (
+                        // ---- 現在モード：路線ごとの運行状況 ----
                         <div className="grid gap-3">
-                            {visible.map((s) => {
+                            {visibleStatus.map((s) => {
                                 const cfg = categoryConfig[s.category];
                                 return (
                                     <Card
@@ -298,12 +374,10 @@ export default function TrainsPage() {
                     ) : (
                         <div className="py-20 text-center space-y-4 bg-white rounded-2xl border border-dashed border-slate-200">
                             <div className="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-400">
-                                {isHistoryMode ? <Info className="w-8 h-8" /> : <CheckCircle2 className="w-8 h-8" />}
+                                <CheckCircle2 className="w-8 h-8" />
                             </div>
                             <p className="text-slate-500 font-medium">
-                                {isHistoryMode
-                                    ? 'この期間・路線に該当する遅延の記録はありません。'
-                                    : '現在、対象路線に遅延・運転見合わせの情報はありません（平常運転）。'}
+                                現在、対象路線に遅延・運転見合わせの情報はありません（平常運転）。
                             </p>
                         </div>
                     )}

@@ -1,69 +1,109 @@
 {
   "generated_at": "2026-06-21T08:45:00+09:00",
-  "items": [
+  "events": [
     {
+      "id": "odpt.Railway:JR-East.ChuoRapid__2026-06-21T08:10:00+09:00",
       "railway": "odpt.Railway:JR-East.ChuoRapid",
       "operator": "odpt.Operator:JR-East",
-      "text": "中央線は、人身事故の影響で、一部列車に遅れが出ています。",
-      "status": "遅延",
-      "category": "delay",
-      "date": "2026-06-21T08:42:00+09:00"
+      "startAt": "2026-06-21T08:10:00+09:00",
+      "endAt": null,
+      "durationMin": null,
+      "maxCategory": "delay",
+      "cause": "accident",
+      "latestText": "中央線は、人身事故の影響で、一部列車に遅れが出ています。",
+      "lastSeenAt": "2026-06-21T08:42:00+09:00",
+      "ongoing": true
     },
     {
+      "id": "odpt.Railway:JR-East.KeihinTohokuNegishi__2026-06-21T07:55:00+09:00",
       "railway": "odpt.Railway:JR-East.KeihinTohokuNegishi",
       "operator": "odpt.Operator:JR-East",
-      "text": "京浜東北・根岸線は、車両点検の影響で、大宮〜大船間の上下線で運転を見合わせています。",
-      "status": "運転見合わせ",
-      "category": "suspended",
-      "date": "2026-06-21T08:30:00+09:00"
+      "startAt": "2026-06-21T07:55:00+09:00",
+      "endAt": "2026-06-21T09:35:00+09:00",
+      "durationMin": 100,
+      "maxCategory": "suspended",
+      "cause": "vehicle",
+      "latestText": "京浜東北・根岸線は、車両点検の影響で、大宮〜大船間の上下線で運転を見合わせています。",
+      "lastSeenAt": "2026-06-21T09:30:00+09:00",
+      "ongoing": false
     },
     {
+      "id": "odpt.Railway:TokyoMetro.Tozai__2026-06-20T17:40:00+09:00",
       "railway": "odpt.Railway:TokyoMetro.Tozai",
       "operator": "odpt.Operator:TokyoMetro",
-      "text": "東西線は、強風の影響で、遅延が発生しています。",
-      "status": "遅延",
-      "category": "delay",
-      "date": "2026-06-20T18:05:00+09:00"
+      "startAt": "2026-06-20T17:40:00+09:00",
+      "endAt": "2026-06-20T18:25:00+09:00",
+      "durationMin": 45,
+      "maxCategory": "delay",
+      "cause": "weather",
+      "latestText": "東西線は、強風の影響で、遅延が発生しています。",
+      "lastSeenAt": "2026-06-20T18:20:00+09:00",
+      "ongoing": false
     },
     {
+      "id": "odpt.Railway:Odakyu.Odawara__2026-06-18T07:30:00+09:00",
       "railway": "odpt.Railway:Odakyu.Odawara",
       "operator": "odpt.Operator:Odakyu",
-      "text": "小田原線は、新宿〜小田原間で振替輸送を実施しています。",
-      "status": "運転状況",
-      "category": "other",
-      "date": "2026-06-18T07:50:00+09:00"
+      "startAt": "2026-06-18T07:30:00+09:00",
+      "endAt": "2026-06-18T08:15:00+09:00",
+      "durationMin": 45,
+      "maxCategory": "other",
+      "cause": "other",
+      "latestText": "小田原線は、新宿〜小田原間で振替輸送を実施しています。",
+      "lastSeenAt": "2026-06-18T08:10:00+09:00",
+      "ongoing": false
     },
     {
+      "id": "odpt.Railway:JR-East.Saikyo__2026-06-15T21:50:00+09:00",
       "railway": "odpt.Railway:JR-East.Saikyo",
       "operator": "odpt.Operator:JR-East",
-      "text": "埼京線は、大雨の影響で、一部区間で運転を見合わせています。",
-      "status": "運転見合わせ",
-      "category": "suspended",
-      "date": "2026-06-15T22:10:00+09:00"
+      "startAt": "2026-06-15T21:50:00+09:00",
+      "endAt": "2026-06-15T23:05:00+09:00",
+      "durationMin": 75,
+      "maxCategory": "suspended",
+      "cause": "weather",
+      "latestText": "埼京線は、大雨の影響で、一部区間で運転を見合わせています。",
+      "lastSeenAt": "2026-06-15T23:00:00+09:00",
+      "ongoing": false
     },
     {
+      "id": "odpt.Railway:TokyoMetro.Marunouchi__2026-05-28T09:05:00+09:00",
       "railway": "odpt.Railway:TokyoMetro.Marunouchi",
       "operator": "odpt.Operator:TokyoMetro",
-      "text": "丸ノ内線は、車内非常通報の影響で、遅延が発生しています。",
-      "status": "遅延",
-      "category": "delay",
-      "date": "2026-05-28T09:15:00+09:00"
+      "startAt": "2026-05-28T09:05:00+09:00",
+      "endAt": "2026-05-28T09:30:00+09:00",
+      "durationMin": 25,
+      "maxCategory": "delay",
+      "cause": "sick",
+      "latestText": "丸ノ内線は、急病人の救護の影響で、遅延が発生しています。",
+      "lastSeenAt": "2026-05-28T09:25:00+09:00",
+      "ongoing": false
     },
     {
+      "id": "odpt.Railway:Toei.Oedo__2026-04-12T08:30:00+09:00",
       "railway": "odpt.Railway:Toei.Oedo",
       "operator": "odpt.Operator:Toei",
-      "text": "大江戸線は、信号確認の影響で、一部列車に遅れが出ています。",
-      "status": "遅延",
-      "category": "delay",
-      "date": "2026-04-12T08:40:00+09:00"
+      "startAt": "2026-04-12T08:30:00+09:00",
+      "endAt": "2026-04-12T09:00:00+09:00",
+      "durationMin": 30,
+      "maxCategory": "delay",
+      "cause": "signal",
+      "latestText": "大江戸線は、信号確認の影響で、一部列車に遅れが出ています。",
+      "lastSeenAt": "2026-04-12T08:55:00+09:00",
+      "ongoing": false
     },
     {
+      "id": "odpt.Railway:Keio.Keio__2026-02-03T18:40:00+09:00",
       "railway": "odpt.Railway:Keio.Keio",
       "operator": "odpt.Operator:Keio",
-      "text": "京王線は、踏切内点検の影響で、遅延が発生しています。",
-      "status": "遅延",
-      "category": "delay",
-      "date": "2026-02-03T18:55:00+09:00"
+      "startAt": "2026-02-03T18:40:00+09:00",
+      "endAt": "2026-02-03T19:20:00+09:00",
+      "durationMin": 40,
+      "maxCategory": "delay",
+      "cause": "crossing",
+      "latestText": "京王線は、踏切内点検の影響で、遅延が発生しています。",
+      "lastSeenAt": "2026-02-03T19:15:00+09:00",
+      "ongoing": false
     }
   ]
 }

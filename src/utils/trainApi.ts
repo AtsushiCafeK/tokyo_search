@@ -4,10 +4,29 @@ import {
   TrainStatus,
   TrainStatusCategory,
   RailwayMaster,
+  DelayEvent,
+  DelayEventView,
+  DelayHistoryFile,
+  DelayCause,
 } from '@/types/train';
 import railwaysData from '@/data/railways.json';
 
 const RAILWAYS = railwaysData as RailwayMaster[];
+
+// 原因区分 → 表示ラベル
+export const CAUSE_LABELS: Record<DelayCause, string> = {
+  accident: '人身事故',
+  sick: '急病人',
+  congestion: '混雑',
+  vehicle: '車両点検・故障',
+  signal: '信号',
+  crossing: '踏切',
+  weather: '天候',
+  earthquake: '地震',
+  power: '停電・架線',
+  intrusion: '線路内立入',
+  other: 'その他',
+};
 
 // 路線ID → マスター情報の索引
 const RAILWAY_MAP = new Map<string, RailwayMaster>(RAILWAYS.map((r) => [r.id, r]));
@@ -104,58 +123,86 @@ export async function fetchTrainStatus(
   }
 }
 
+/** DelayEvent に路線マスター情報を結合して表示用にする。マスター外は null。 */
+function toEventView(ev: DelayEvent): DelayEventView | null {
+  const master = RAILWAY_MAP.get(ev.railway);
+  if (!master) return null;
+  return {
+    ...ev,
+    operatorName: master.operatorName,
+    railwayName: master.name,
+    color: master.color,
+    causeLabel: CAUSE_LABELS[ev.cause] ?? CAUSE_LABELS.other,
+  };
+}
+
 /**
- * 履歴（蓄積された「乱れ」レコード）をフェッチする。
- * train_delay_history.json を読み、マスターに載っている路線のみ返す（新しい順）。
+ * 遅延イベント履歴をフェッチする。
+ * train_delay_history.json（イベント形式）を読み、マスター掲載路線のみ返す（新しい順）。
  */
 export async function fetchTrainHistory(
   sourcePath: string = '/data/train_delay_history.json'
-): Promise<{ items: TrainStatus[]; generatedAt: string | null }> {
+): Promise<{ events: DelayEventView[]; generatedAt: string | null }> {
   try {
     const response = await fetch(sourcePath, { cache: 'no-store' });
     if (!response.ok) throw new Error('Network response was not ok');
-    const data: TrainDelayFile = await response.json();
+    const data: DelayHistoryFile = await response.json();
 
-    const items: TrainStatus[] = [];
-    for (const raw of data.items ?? []) {
-      const t = transform(raw);
-      if (t) items.push(t);
+    const events: DelayEventView[] = [];
+    for (const ev of data.events ?? []) {
+      const v = toEventView(ev);
+      if (v) events.push(v);
     }
-    // 新しい順（日時降順）
-    items.sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
+    // 開始が新しい順
+    events.sort((a, b) => (b.startAt || '').localeCompare(a.startAt || ''));
 
-    return { items, generatedAt: data.generated_at ?? null };
+    return { events, generatedAt: data.generated_at ?? null };
   } catch (error) {
     console.error('Failed to fetch train history:', error);
-    return { items: [], generatedAt: null };
+    return { events: [], generatedAt: null };
   }
 }
 
 /**
- * 期間でフィルタリングする。
- * 'all'=全期間, '1'=本日, '3'/'7'/'30'=N日以内, '2026'等=該当年。
- * updatedAt（ISO8601）を基準に判定する。
+ * 期間でイベントをフィルタリングする（開始日時 startAt 基準）。
+ * 'all'=全期間, 数字=N日以内, 4桁=該当年。
  */
-export function filterByPeriod(list: TrainStatus[], period: string): TrainStatus[] {
-  if (period === 'all') return list;
+export function filterEventsByPeriod(events: DelayEventView[], period: string): DelayEventView[] {
+  if (period === 'all') return events;
 
   if (/^\d{4}$/.test(period)) {
-    return list.filter((s) => (s.updatedAt || '').startsWith(period));
+    return events.filter((e) => (e.startAt || '').startsWith(period));
   }
 
   const days = parseInt(period, 10);
-  if (Number.isNaN(days)) return list;
+  if (Number.isNaN(days)) return events;
   const now = Date.now();
-  return list.filter((s) => {
-    const t = new Date(s.updatedAt).getTime();
+  return events.filter((e) => {
+    const t = new Date(e.startAt).getTime();
     if (Number.isNaN(t)) return false;
     const diffDays = Math.ceil((now - t) / (1000 * 60 * 60 * 24));
     return diffDays <= days;
   });
 }
 
+/** イベント配列を路線でフィルタ。'all' は全件。 */
+export function filterEventsByRailway(events: DelayEventView[], railwayId: string): DelayEventView[] {
+  if (railwayId === 'all') return events;
+  return events.filter((e) => e.railway === railwayId);
+}
+
+/** イベント配列の集計（最大深刻度ベース）。 */
+export function getEventSummary(events: DelayEventView[]) {
+  return {
+    total: events.length,
+    suspended: events.filter((e) => e.maxCategory === 'suspended').length,
+    delay: events.filter((e) => e.maxCategory === 'delay').length,
+    other: events.filter((e) => e.maxCategory === 'other').length,
+  };
+}
+
 /**
- * 路線でフィルタリングする。'all' は全件。
+ * 路線でフィルタリングする（スナップショット用）。'all' は全件。
  */
 export function filterByRailway(list: TrainStatus[], railwayId: string): TrainStatus[] {
   if (railwayId === 'all') return list;
