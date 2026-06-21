@@ -18,7 +18,9 @@ import { Navigation } from '@/components/Navigation';
 import { TrainStatus, TrainStatusCategory } from '@/types/train';
 import {
     fetchTrainStatus,
+    fetchTrainHistory,
     filterByRailway,
+    filterByPeriod,
     getDelaySummary,
     getOperators,
     RAILWAYS,
@@ -65,12 +67,16 @@ function formatTime(iso: string): string {
 
 export default function TrainsPage() {
     const [allStatus, setAllStatus] = useState<TrainStatus[]>([]);
+    const [history, setHistory] = useState<TrainStatus[]>([]);
+    const [historyLoaded, setHistoryLoaded] = useState(false);
     const [selectedRailway, setSelectedRailway] = useState('all');
+    const [selectedPeriod, setSelectedPeriod] = useState('now');
     const [generatedAt, setGeneratedAt] = useState<string | null>(null);
     const [loaded, setLoaded] = useState(false);
     const [onlyDisrupted, setOnlyDisrupted] = useState(true);
 
     const operators = getOperators();
+    const isHistoryMode = selectedPeriod !== 'now';
 
     useEffect(() => {
         async function load() {
@@ -82,13 +88,33 @@ export default function TrainsPage() {
         load();
     }, []);
 
-    const filtered = filterByRailway(allStatus, selectedRailway);
-    const summary = getDelaySummary(filtered);
+    // 履歴は過去期間を初めて選んだときに一度だけ読み込む
+    useEffect(() => {
+        if (isHistoryMode && !historyLoaded) {
+            fetchTrainHistory().then(({ items }) => {
+                setHistory(items);
+                setHistoryLoaded(true);
+            });
+        }
+    }, [isHistoryMode, historyLoaded]);
 
-    // 表示対象：「乱れのみ」トグルON時は平常運転を除外
-    const visible = (onlyDisrupted ? filtered.filter((s) => !s.isNormal) : filtered)
-        .slice()
-        .sort((a, b) => SEVERITY[a.category] - SEVERITY[b.category]);
+    // 表示対象の決定
+    let visible: TrainStatus[];
+    let summary: ReturnType<typeof getDelaySummary>;
+
+    if (isHistoryMode) {
+        const base = filterByPeriod(filterByRailway(history, selectedRailway), selectedPeriod);
+        summary = getDelaySummary(base);
+        // 履歴は新しい順（fetch時に降順済み）
+        visible = base;
+    } else {
+        const filtered = filterByRailway(allStatus, selectedRailway);
+        summary = getDelaySummary(filtered);
+        // 「乱れのみ」トグルON時は平常運転を除外し、重い順に並べる
+        visible = (onlyDisrupted ? filtered.filter((s) => !s.isNormal) : filtered)
+            .slice()
+            .sort((a, b) => SEVERITY[a.category] - SEVERITY[b.category]);
+    }
 
     return (
         <main className="min-h-screen bg-slate-50/50 flex flex-col items-center">
@@ -114,17 +140,34 @@ export default function TrainsPage() {
                         路線を選択
                     </div>
                     <div className="flex gap-3 w-full md:w-auto items-center">
-                        <button
-                            type="button"
-                            onClick={() => setOnlyDisrupted((v) => !v)}
-                            className={`text-xs font-bold px-3 py-2 rounded-lg border transition-colors whitespace-nowrap ${
-                                onlyDisrupted
-                                    ? 'bg-primary/10 text-primary border-primary/20'
-                                    : 'bg-slate-50 text-slate-500 border-slate-200'
-                            }`}
-                        >
-                            {onlyDisrupted ? '乱れのみ表示中' : 'すべて表示中'}
-                        </button>
+                        {!isHistoryMode && (
+                            <button
+                                type="button"
+                                onClick={() => setOnlyDisrupted((v) => !v)}
+                                className={`text-xs font-bold px-3 py-2 rounded-lg border transition-colors whitespace-nowrap ${
+                                    onlyDisrupted
+                                        ? 'bg-primary/10 text-primary border-primary/20'
+                                        : 'bg-slate-50 text-slate-500 border-slate-200'
+                                }`}
+                            >
+                                {onlyDisrupted ? '乱れのみ表示中' : 'すべて表示中'}
+                            </button>
+                        )}
+                        <div className="flex-1 md:w-36">
+                            <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                                <SelectTrigger className="bg-slate-50 border-slate-200">
+                                    <SelectValue placeholder="期間" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="now">現在（最新）</SelectItem>
+                                    <SelectItem value="1">本日</SelectItem>
+                                    <SelectItem value="7">1週間以内</SelectItem>
+                                    <SelectItem value="30">1ヶ月以内</SelectItem>
+                                    <SelectItem value="2026">2026年</SelectItem>
+                                    <SelectItem value="all">全期間</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                         <div className="flex-1 md:w-64">
                             <Select value={selectedRailway} onValueChange={setSelectedRailway}>
                                 <SelectTrigger className="bg-slate-50 border-slate-200">
@@ -152,7 +195,9 @@ export default function TrainsPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <Card className="bg-white border-slate-200 shadow-sm">
                         <div className="p-4 text-center">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">対象路線</p>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                                {isHistoryMode ? '記録件数' : '対象路線'}
+                            </p>
                             <p className="text-2xl font-black text-slate-800">{summary.total}</p>
                         </div>
                     </Card>
@@ -168,12 +213,21 @@ export default function TrainsPage() {
                             <p className="text-2xl font-black text-orange-600">{summary.delay}</p>
                         </div>
                     </Card>
-                    <Card className="bg-emerald-50/30 border-emerald-100 shadow-sm">
-                        <div className="p-4 text-center">
-                            <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-1">平常運転</p>
-                            <p className="text-2xl font-black text-emerald-600">{summary.normal}</p>
-                        </div>
-                    </Card>
+                    {isHistoryMode ? (
+                        <Card className="bg-amber-50/30 border-amber-100 shadow-sm">
+                            <div className="p-4 text-center">
+                                <p className="text-[10px] font-bold text-amber-400 uppercase tracking-wider mb-1">運行情報あり</p>
+                                <p className="text-2xl font-black text-amber-600">{summary.other}</p>
+                            </div>
+                        </Card>
+                    ) : (
+                        <Card className="bg-emerald-50/30 border-emerald-100 shadow-sm">
+                            <div className="p-4 text-center">
+                                <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-1">平常運転</p>
+                                <p className="text-2xl font-black text-emerald-600">{summary.normal}</p>
+                            </div>
+                        </Card>
+                    )}
                 </div>
 
                 {/* List */}
@@ -181,9 +235,9 @@ export default function TrainsPage() {
                     <div className="flex items-center justify-between">
                         <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
                             <Train className="w-5 h-5 text-primary" />
-                            運行状況
+                            {isHistoryMode ? '遅延・運行情報の履歴' : '運行状況'}
                         </h2>
-                        {generatedAt && (
+                        {!isHistoryMode && generatedAt && (
                             <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="w-3.5 h-3.5" />
                                 {formatTime(generatedAt)} 時点
@@ -191,7 +245,7 @@ export default function TrainsPage() {
                         )}
                     </div>
 
-                    {!loaded ? (
+                    {(isHistoryMode ? !historyLoaded : !loaded) ? (
                         <div className="py-20 text-center text-slate-400">読み込み中...</div>
                     ) : visible.length > 0 ? (
                         <div className="grid gap-3">
@@ -244,10 +298,12 @@ export default function TrainsPage() {
                     ) : (
                         <div className="py-20 text-center space-y-4 bg-white rounded-2xl border border-dashed border-slate-200">
                             <div className="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-400">
-                                <CheckCircle2 className="w-8 h-8" />
+                                {isHistoryMode ? <Info className="w-8 h-8" /> : <CheckCircle2 className="w-8 h-8" />}
                             </div>
                             <p className="text-slate-500 font-medium">
-                                現在、対象路線に遅延・運転見合わせの情報はありません（平常運転）。
+                                {isHistoryMode
+                                    ? 'この期間・路線に該当する遅延の記録はありません。'
+                                    : '現在、対象路線に遅延・運転見合わせの情報はありません（平常運転）。'}
                             </p>
                         </div>
                     )}

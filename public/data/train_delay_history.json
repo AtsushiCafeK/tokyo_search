@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-06-21T08:45:00+09:00",
+  "items": [
+    {
+      "railway": "odpt.Railway:JR-East.ChuoRapid",
+      "operator": "odpt.Operator:JR-East",
+      "text": "中央線は、人身事故の影響で、一部列車に遅れが出ています。",
+      "status": "遅延",
+      "category": "delay",
+      "date": "2026-06-21T08:42:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:JR-East.KeihinTohokuNegishi",
+      "operator": "odpt.Operator:JR-East",
+      "text": "京浜東北・根岸線は、車両点検の影響で、大宮〜大船間の上下線で運転を見合わせています。",
+      "status": "運転見合わせ",
+      "category": "suspended",
+      "date": "2026-06-21T08:30:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:TokyoMetro.Tozai",
+      "operator": "odpt.Operator:TokyoMetro",
+      "text": "東西線は、強風の影響で、遅延が発生しています。",
+      "status": "遅延",
+      "category": "delay",
+      "date": "2026-06-20T18:05:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:Odakyu.Odawara",
+      "operator": "odpt.Operator:Odakyu",
+      "text": "小田原線は、新宿〜小田原間で振替輸送を実施しています。",
+      "status": "運転状況",
+      "category": "other",
+      "date": "2026-06-18T07:50:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:JR-East.Saikyo",
+      "operator": "odpt.Operator:JR-East",
+      "text": "埼京線は、大雨の影響で、一部区間で運転を見合わせています。",
+      "status": "運転見合わせ",
+      "category": "suspended",
+      "date": "2026-06-15T22:10:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:TokyoMetro.Marunouchi",
+      "operator": "odpt.Operator:TokyoMetro",
+      "text": "丸ノ内線は、車内非常通報の影響で、遅延が発生しています。",
+      "status": "遅延",
+      "category": "delay",
+      "date": "2026-05-28T09:15:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:Toei.Oedo",
+      "operator": "odpt.Operator:Toei",
+      "text": "大江戸線は、信号確認の影響で、一部列車に遅れが出ています。",
+      "status": "遅延",
+      "category": "delay",
+      "date": "2026-04-12T08:40:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:Keio.Keio",
+      "operator": "odpt.Operator:Keio",
+      "text": "京王線は、踏切内点検の影響で、遅延が発生しています。",
+      "status": "遅延",
+      "category": "delay",
+      "date": "2026-02-03T18:55:00+09:00"
+    }
+  ]
+}

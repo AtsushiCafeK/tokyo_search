@@ -2,6 +2,10 @@
 /import_csv/
 /import_json/
 
+# python
+__pycache__/
+*.pyc
+
 # dependencies
 /node_modules
 /.pnp

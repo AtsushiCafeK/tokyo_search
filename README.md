@@ -126,8 +126,13 @@ tokyo_search/
 
 ```
 【さくらサーバー cron】約15分ごと
-  ODPT TrainInformation API → 対象路線に整形 → data/train_delay.json を上書き
+  ODPT TrainInformation API → 対象路線に整形
+    ├─ data/train_delay.json          … 現在のスナップショット（上書き）
+    └─ data/train_delay_history.json  … 「乱れ」のみ蓄積マージ（履歴）
 ```
+
+スナップショットはページの「現在（最新）」表示、履歴はページの期間選択（本日／1週間／1ヶ月／年／全期間）で使用する。
+履歴は重複除去キー `路線ID + dc:date` でマージ蓄積する（けいしちょうDBの `send_at + subject` と同じ方式）。
 
 ### データソース
 
@@ -145,10 +150,11 @@ https://www.odpt.org/
 */15 * * * * ODPT_KEY=xxxxxxxx bash /home/hazimeru/www/tokyo_search/scripts/update_train_delay.sh
 ```
 
-### 第2段階以降の予定
+### 段階
 
-- 取得スナップショットを蓄積マージ方式に変更し、ページに期間選択（履歴）を追加。
-- 簡易路線図に遅延中路線を色付け表示。
+- **第1段階（実装済み）**: 現在の運行・遅延情報を路線別に一覧表示。
+- **第2段階（実装済み）**: cronで「乱れ」を `train_delay_history.json` に蓄積し、ページに期間選択（履歴）を追加。履歴は cron 稼働開始以降に積み上がる。
+- **第3段階（予定）**: 簡易路線図に遅延中路線を色付け表示。
 
 ---
 

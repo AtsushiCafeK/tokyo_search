@@ -56,6 +56,68 @@ def extract_text(info: dict) -> str:
     return (text or "").strip()
 
 
+def classify_category(text: str, status: str = "") -> str:
+    """運行情報テキスト/状況から区分を判定する（trainApi.ts の classifyStatus と同じ規則）。"""
+    t = f"{status or ''} {text or ''}"
+    if any(k in t for k in ("見合わせ", "運転中止", "運休", "運転を見合")):
+        return "suspended"
+    if any(k in t for k in ("遅延", "遅れ", "直通運転中止", "一部列車")):
+        return "delay"
+    if "平常" in t or "通常" in t or t.strip() == "":
+        return "normal"
+    return "other"
+
+
+def merge_history(history_path: str, new_items: list, generated_at: str) -> int:
+    """
+    「乱れ」レコードを履歴JSONにマージ蓄積する（重複除去・新規優先）。
+    キー = 路線ID + dc:date（情報が更新されるたび date が変わるので 1更新=1レコード）。
+    けいしちょうの蓄積方式（send_at + subject キー）と同じ考え方。
+    """
+    # 蓄積対象は「平常運転」以外のみ
+    disrupted = []
+    for r in new_items:
+        category = classify_category(r.get("text", ""), r.get("status", ""))
+        if category == "normal":
+            continue
+        rec = dict(r)
+        rec["category"] = category
+        # dc:date が空のレコードは取得時刻で代用（キーが安定するように）
+        if not rec.get("date"):
+            rec["date"] = generated_at
+        disrupted.append(rec)
+
+    # 既存履歴を読み込む
+    existing = []
+    if os.path.exists(history_path):
+        try:
+            with open(history_path, encoding="utf-8") as f:
+                data = json.load(f)
+                existing = data.get("items", []) if isinstance(data, dict) else data
+        except Exception as e:
+            print(f"  警告: 履歴JSONの読み込みに失敗（新規作成します）: {e}", file=sys.stderr)
+
+    def key(r):
+        return f"{r.get('railway', '')}__{r.get('date', '')}"
+
+    merged = {key(r): r for r in existing}
+    added = 0
+    for r in disrupted:
+        k = key(r)
+        if k not in merged:
+            added += 1
+        merged[k] = r  # 新規データで上書き
+
+    result = sorted(merged.values(), key=lambda r: r.get("date", ""))
+
+    os.makedirs(os.path.dirname(os.path.abspath(history_path)), exist_ok=True)
+    with open(history_path, "w", encoding="utf-8") as f:
+        json.dump({"generated_at": generated_at, "items": result}, f, ensure_ascii=False, indent=2)
+
+    print(f"  履歴: 追加 {added} 件 / 累計 {len(result)} 件 → {history_path}")
+    return added
+
+
 def main():
     if len(sys.argv) < 2:
         print(f"使い方: {sys.argv[0]} <出力JSONパス> [<railways.jsonパス>]", file=sys.stderr)
@@ -98,8 +160,9 @@ def main():
             })
         print(f"  {op}: {sum(1 for i in items if i['operator'] == op)} 件")
 
+    generated_at = datetime.now(JST).isoformat(timespec="seconds")
     output = {
-        "generated_at": datetime.now(JST).isoformat(timespec="seconds"),
+        "generated_at": generated_at,
         "items": items,
     }
 
@@ -107,7 +170,14 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f"[{datetime.now(JST):%Y-%m-%d %H:%M:%S}] 保存完了: {out_path}（{len(items)} 件）")
+    print(f"[{datetime.now(JST):%Y-%m-%d %H:%M:%S}] スナップショット保存: {out_path}（{len(items)} 件）")
+
+    # ---- 履歴蓄積（第2段階）----------------------------------------
+    # スナップショットと同じディレクトリに train_delay_history.json を蓄積する。
+    history_path = os.path.join(os.path.dirname(os.path.abspath(out_path)), "train_delay_history.json")
+    merge_history(history_path, items, generated_at)
+
+    print(f"[{datetime.now(JST):%Y-%m-%d %H:%M:%S}] 完了")
 
 
 if __name__ == "__main__":
