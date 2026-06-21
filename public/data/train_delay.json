@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-06-21T08:45:00+09:00",
+  "items": [
+    {
+      "railway": "odpt.Railway:JR-East.ChuoRapid",
+      "operator": "odpt.Operator:JR-East",
+      "text": "中央線は、人身事故の影響で、一部列車に遅れが出ています。",
+      "status": "遅延",
+      "date": "2026-06-21T08:42:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:JR-East.KeihinTohokuNegishi",
+      "operator": "odpt.Operator:JR-East",
+      "text": "京浜東北・根岸線は、車両点検の影響で、大宮〜大船間の上下線で運転を見合わせています。運転再開見込みは午前9時30分頃です。",
+      "status": "運転見合わせ",
+      "date": "2026-06-21T08:30:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:TokyoMetro.Tozai",
+      "operator": "odpt.Operator:TokyoMetro",
+      "text": "東西線は、強風の影響で、遅延が発生しています。",
+      "status": "遅延",
+      "date": "2026-06-21T08:38:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:Odakyu.Odawara",
+      "operator": "odpt.Operator:Odakyu",
+      "text": "小田原線は、新宿〜小田原間で振替輸送を実施しています。",
+      "status": "運転状況",
+      "date": "2026-06-21T08:20:00+09:00"
+    },
+    {
+      "railway": "odpt.Railway:TokyoMetro.Ginza",
+      "operator": "odpt.Operator:TokyoMetro",
+      "text": "平常運転",
+      "status": "平常運転",
+      "date": "2026-06-21T08:45:00+09:00"
+    }
+  ]
+}
