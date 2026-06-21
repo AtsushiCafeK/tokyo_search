@@ -39,9 +39,6 @@ export function Footer() {
                     <Link href="/roadmap" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         開発ロードマップ
                     </Link>
-                    <Link href="/trains" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
-                        電車遅延情報
-                    </Link>
                     <Link href="/alerts" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         メールけいしちょうDB
                     </Link>
