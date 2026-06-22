@@ -92,6 +92,11 @@ export default function FraudPage() {
                         )}
                     </div>
 
+                    <p className="flex items-center gap-2 text-sm font-bold text-primary bg-primary/5 border border-primary/10 rounded-lg px-4 py-2.5">
+                        <ChevronRight className="w-4 h-4 shrink-0" />
+                        手口名を押すと、その「対策・やること」が見られます。
+                    </p>
+
                     {!loaded ? (
                         <div className="py-16 text-center text-slate-400">読み込み中...</div>
                     ) : views.length > 0 ? (
@@ -103,16 +108,23 @@ export default function FraudPage() {
                                             {v.rank}
                                         </span>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-bold text-slate-800">{v.methodName}</p>
+                                            <p className="font-bold text-slate-800 underline decoration-primary/30 underline-offset-4 group-hover:decoration-primary">
+                                                {v.methodName}
+                                            </p>
                                             <p className="text-sm text-slate-500">
                                                 認知 {v.count.toLocaleString()} 件 ／ 被害 {formatAmountJa(v.amountYen)}
                                             </p>
                                         </div>
-                                        {v.method && <ChevronRight className="w-5 h-5 text-slate-300 shrink-0" />}
+                                        {v.method && (
+                                            <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 group-hover:bg-primary group-hover:text-white transition-colors">
+                                                対策を見る
+                                                <ChevronRight className="w-4 h-4" />
+                                            </span>
+                                        )}
                                     </div>
                                 );
                                 return v.method ? (
-                                    <a key={v.methodKey} href={`#${v.methodKey}`} className="block">{inner}</a>
+                                    <a key={v.methodKey} href={`#${v.methodKey}`} className="group block">{inner}</a>
                                 ) : (
                                     <div key={v.methodKey}>{inner}</div>
                                 );
