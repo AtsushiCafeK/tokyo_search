@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { ShieldAlert, Phone, AlertTriangle, ListOrdered, Info, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -205,7 +204,7 @@ export default function FraudPage() {
                     </h3>
                     <p className="text-sm text-slate-700">
                         東京都内の市区町村別の不審者・詐欺などの注意喚起は{' '}
-                        <Link href="/alerts" className="text-primary font-bold hover:underline">メールけいしちょうDB</Link>
+                        <a href="/alerts" className="text-primary font-bold hover:underline">メールけいしちょうDB</a>
                         {' '}でご確認いただけます。
                     </p>
                 </section>

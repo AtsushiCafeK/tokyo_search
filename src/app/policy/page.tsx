@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ChevronLeft, ShieldCheck, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
@@ -14,12 +13,12 @@ export default function PolicyPage() {
             {/* Header */}
             <div className="w-full bg-white border-b border-gray-200 shadow-sm py-6">
                 <div className="max-w-4xl mx-auto px-4 flex items-center gap-4">
-                    <Link href="/">
+                    <a href="/">
                         <Button variant="ghost" size="sm" className="gap-1 px-2">
                             <ChevronLeft className="w-4 h-4" />
                             戻る
                         </Button>
-                    </Link>
+                    </a>
                     <div className="flex items-center gap-2">
                         <ShieldCheck className="w-6 h-6 text-primary" />
                         <h1 className="text-xl font-bold text-foreground tracking-tight">サイトポリシー</h1>
@@ -192,11 +191,11 @@ export default function PolicyPage() {
                 </div>
 
                 <div className="mt-8 text-center">
-                    <Link href="/">
+                    <a href="/">
                         <Button variant="outline" className="rounded-full">
                             メインサイトに戻る
                         </Button>
-                    </Link>
+                    </a>
                 </div>
             </div>
 

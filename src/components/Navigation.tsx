@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, ShieldAlert, BarChart3, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -23,7 +22,7 @@ export function Navigation() {
                 const Icon = item.icon;
 
                 return (
-                    <Link
+                    <a
                         key={item.href}
                         href={item.href}
                         className={cn(
@@ -35,7 +34,7 @@ export function Navigation() {
                     >
                         <Icon className="w-4 h-4" />
                         <span>{item.name}</span>
-                    </Link>
+                    </a>
                 );
             })}
         </nav>
