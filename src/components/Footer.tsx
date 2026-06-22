@@ -36,6 +36,9 @@ export function Footer() {
                     <Link href="/policy" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         サイトポリシー
                     </Link>
+                    <Link href="/fraud" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
+                        詐欺対策
+                    </Link>
                     <Link href="/roadmap" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         開発ロードマップ
                     </Link>

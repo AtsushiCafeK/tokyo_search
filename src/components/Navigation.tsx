@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShieldAlert, BarChart3 } from 'lucide-react';
+import { Home, ShieldAlert, BarChart3, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
     { name: 'トップ', href: '/', icon: Home },
+    { name: '詐欺対策', href: '/fraud', icon: AlertTriangle },
     // 電車遅延情報(/trains)は一旦非公開（リンクのみ削除・ページは残置）
     { name: 'メールけいしちょうDB', href: '/alerts', icon: ShieldAlert },
     { name: '開発ロードマップ', href: '/roadmap', icon: BarChart3 },

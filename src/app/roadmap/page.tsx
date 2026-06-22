@@ -34,12 +34,12 @@ const COMPLETED_TASKS = [
     { name: 'サイトポリシーページ作成', progress: 100 },
     { name: 'スマホ誘導用QRコードの設置（フッター等）', progress: 100 },
     { name: '地域の自動記憶機能（Cookie/LocalStorage）', progress: 100 },
-    { name: '市区町村別 メールけいしちょうDBの実装', progress: 100 }
+    { name: '市区町村別 メールけいしちょうDBの実装', progress: 100 },
+    { name: '最新の詐欺手口と対策情報（手口別ランキング・相談先）', progress: 100 }
 ];
 
 const PENDING_TASKS = [
     { name: '流行のIT関連情報の信頼性解説', progress: 0 },
-    { name: '最新の詐欺手口と対策情報', progress: 0 },
     { name: 'マイナポータルの活用法とトラブル解決', progress: 0 },
     { name: 'SNSリテラシー教育コンテンツ', progress: 0 }
 ];
