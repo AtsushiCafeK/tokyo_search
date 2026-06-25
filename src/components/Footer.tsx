@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { MessageSquare, ExternalLink } from 'lucide-react';
 
 export function Footer() {
@@ -33,15 +32,18 @@ export function Footer() {
                             <ExternalLink className="w-3 h-3 opacity-50" />
                         </a>
                     </div>
-                    <Link href="/policy" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
+                    <a href="/policy" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         サイトポリシー
-                    </Link>
-                    <Link href="/roadmap" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
+                    </a>
+                    <a href="/fraud" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
+                        詐欺対策
+                    </a>
+                    <a href="/roadmap" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         開発ロードマップ
-                    </Link>
-                    <Link href="/alerts" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
+                    </a>
+                    <a href="/alerts" className="hover:text-primary transition-colors underline underline-offset-4 decoration-slate-300">
                         メールけいしちょうDB
-                    </Link>
+                    </a>
                 </div>
 
                 {/* Copyright & QR */}
