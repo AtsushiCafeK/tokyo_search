@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
 
 export const metadata = {
-    title: '開発ロードマップ | 東京都+全市区町村 行政情報 横断検索 | hazimeru.net',
-    description: 'hazimeru.netの今後の開発予定と進捗状況を公開しています。ユーザーの利便性向上に向けた取り組みをご確認ください。',
+    title: '開発ロードマップ | 東京都+全市区町村 行政情報 横断検索 | TokyoGovSearch',
+    description: 'TokyoGovSearchの今後の開発予定と進捗状況を公開しています。ユーザーの利便性向上に向けた取り組みをご確認ください。',
 };
 
 const IN_PROGRESS_TASKS = [

@@ -6,21 +6,21 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '東京都+全市区町村 行政情報 横断検索 | hazimeru.net',
+  title: '東京都+全市区町村 行政情報 横断検索 | TokyoGovSearch',
   description: '東京都内すべての市区町村（23区・市町村）と東京都庁の公式Webサイトから、助成金、補助金、手続き、住民票などの行政情報をまとめて素早く検索できる、都民のための横断検索サイトです。',
   keywords: ['東京都', '市区町村', '行政サービス', '補助金', '助成金', '横断検索', '自治体検索', '手続き', '住民票', 'ゴミ出し'],
   authors: [{ name: 'IT Libero' }],
   openGraph: {
-    title: '東京都+全市区町村 行政情報 横断検索 | hazimeru.net',
+    title: '東京都+全市区町村 行政情報 横断検索 | TokyoGovSearch',
     description: '市区町村と東京都の公式情報をまとめて一括検索',
     type: 'website',
     locale: 'ja_JP',
-    url: 'https://hazimeru.net',
-    siteName: 'hazimeru.net',
+    url: 'https://hazimeru.it-libero.com',
+    siteName: 'TokyoGovSearch',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '東京都+全市区町村 行政情報 横断検索 | hazimeru.net',
+    title: '東京都+全市区町村 行政情報 横断検索 | TokyoGovSearch',
     description: '市区町村と東京都の公式情報をまとめて一括検索',
   },
   robots: {
