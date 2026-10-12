@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ChevronLeft, BarChart3, Rocket, Clock, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
@@ -34,12 +33,12 @@ const COMPLETED_TASKS = [
     { name: 'サイトポリシーページ作成', progress: 100 },
     { name: 'スマホ誘導用QRコードの設置（フッター等）', progress: 100 },
     { name: '地域の自動記憶機能（Cookie/LocalStorage）', progress: 100 },
-    { name: '市区町村別 メールけいしちょうDBの実装', progress: 100 }
+    { name: '市区町村別 メールけいしちょうDBの実装', progress: 100 },
+    { name: '最新の詐欺手口と対策情報（手口別ランキング・相談先）', progress: 100 }
 ];
 
 const PENDING_TASKS = [
     { name: '流行のIT関連情報の信頼性解説', progress: 0 },
-    { name: '最新の詐欺手口と対策情報', progress: 0 },
     { name: 'マイナポータルの活用法とトラブル解決', progress: 0 },
     { name: 'SNSリテラシー教育コンテンツ', progress: 0 }
 ];
@@ -61,12 +60,12 @@ export default function RoadmapPage() {
             {/* Header */}
             <div className="w-full bg-white border-b border-gray-200 shadow-sm py-6">
                 <div className="max-w-4xl mx-auto px-4 flex items-center gap-4">
-                    <Link href="/">
+                    <a href="/">
                         <Button variant="ghost" size="sm" className="gap-1 px-2 text-muted-foreground hover:text-foreground">
                             <ChevronLeft className="w-4 h-4" />
                             戻る
                         </Button>
-                    </Link>
+                    </a>
                     <div className="flex items-center gap-2">
                         <BarChart3 className="w-6 h-6 text-primary" />
                         <h1 className="text-xl font-bold text-foreground tracking-tighter">開発ロードマップ</h1>

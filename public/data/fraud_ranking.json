@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-06-22T11:42:35+09:00",
+  "source": "警察庁ウェブサイト「特殊詐欺の認知・検挙状況等について」",
+  "sourceUrl": "https://www.npa.go.jp/publications/statistics/sousa/sagi.html",
+  "period": "令和８年１月～４月",
+  "total": {
+    "methodKey": "all",
+    "methodName": "特殊詐欺",
+    "count": 14898,
+    "amountYen": 125997328926,
+    "period": "令和８年１月～４月"
+  },
+  "items": [
+    {
+      "rank": 1,
+      "methodKey": "sns_investment",
+      "methodName": "ＳＮＳ型投資詐欺",
+      "count": 4381,
+      "amountYen": 59250906000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 2,
+      "methodKey": "fake_police",
+      "methodName": "ニセ警察詐欺",
+      "count": 3058,
+      "amountYen": 32524573000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 3,
+      "methodKey": "billing",
+      "methodName": "架空料金請求詐欺",
+      "count": 2086,
+      "amountYen": 5307602000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 4,
+      "methodKey": "sns_romance",
+      "methodName": "ＳＮＳ型ロマンス詐欺",
+      "count": 1662,
+      "amountYen": 17182636000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 5,
+      "methodKey": "oreore",
+      "methodName": "オレオレ詐欺",
+      "count": 1130,
+      "amountYen": 4171592000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 6,
+      "methodKey": "refund",
+      "methodName": "還付金詐欺",
+      "count": 906,
+      "amountYen": 1942671000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 7,
+      "methodKey": "cashcard_theft",
+      "methodName": "キャッシュカード詐欺盗",
+      "count": 472,
+      "amountYen": 507863500,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 8,
+      "methodKey": "other",
+      "methodName": "その他の特殊詐欺",
+      "count": 411,
+      "amountYen": 2305928000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 9,
+      "methodKey": "deposit",
+      "methodName": "預貯金詐欺",
+      "count": 323,
+      "amountYen": 314817426,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 10,
+      "methodKey": "matchmaking",
+      "methodName": "交際あっせん詐欺",
+      "count": 224,
+      "amountYen": 827068000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 11,
+      "methodKey": "financial_product",
+      "methodName": "金融商品詐欺",
+      "count": 119,
+      "amountYen": 1526632000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 12,
+      "methodKey": "loan_guarantee",
+      "methodName": "融資保証金詐欺",
+      "count": 111,
+      "amountYen": 76838000,
+      "period": "令和８年１月～４月"
+    },
+    {
+      "rank": 13,
+      "methodKey": "gambling",
+      "methodName": "ギャンブル詐欺",
+      "count": 15,
+      "amountYen": 58202000,
+      "period": "令和８年１月～４月"
+    }
+  ]
+}

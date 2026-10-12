@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
 import { SearchBar } from '@/components/SearchBar';
 import { RegionSelector, Municipality, specialOptions } from '@/components/RegionSelector';
 import { Building, ArrowUp } from 'lucide-react';
