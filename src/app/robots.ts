@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
         },
-        sitemap: 'https://hazimeru.net/sitemap.xml',
+        sitemap: 'https://hazimeru.it-libero.com/sitemap.xml',
     };
 }

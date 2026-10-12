@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
 
 export const metadata = {
-    title: 'サイトポリシー | 東京都+全市区町村 行政情報 横断検索 | hazimeru.net',
-    description: 'hazimeru.netのサイトポリシーとプライバシーポリシーに関するご案内です。',
+    title: 'サイトポリシー | 東京都+全市区町村 行政情報 横断検索 | TokyoGovSearch',
+    description: 'TokyoGovSearchのサイトポリシーとプライバシーポリシーに関するご案内です。',
 };
 
 export default function PolicyPage() {
@@ -36,7 +36,7 @@ export default function PolicyPage() {
                             運営目的
                         </h2>
                         <p className="text-muted-foreground leading-relaxed">
-                            「hazimeru.net」は、東京都内の市区町村および東京都が提供する公式Webサイトの情報を、横断的に素早く検索できるツールとして個人で運営しています。住民の方々が行政サービスや助成金情報などに、よりスムーズにアクセスできるよう支援することを目的としています。
+                            「TokyoGovSearch」は、東京都内の市区町村および東京都が提供する公式Webサイトの情報を、横断的に素早く検索できるツールとして個人で運営しています。住民の方々が行政サービスや助成金情報などに、よりスムーズにアクセスできるよう支援することを目的としています。
                         </p>
                     </section>
 

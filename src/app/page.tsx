@@ -153,7 +153,7 @@ export default function Home() {
             <Building className={`text-primary transition-all duration-500 ${hasSearched ? 'w-8 h-8' : 'w-12 h-12'}`} />
           </div>
           <h1 className={`font-extrabold text-foreground tracking-tight py-2 transition-all duration-500 ${hasSearched ? 'text-2xl md:text-3xl' : 'text-3xl md:text-5xl'}`}>
-            hazimeru.net <span className="text-primary font-bold text-xl md:text-3xl block md:inline mt-1 md:mt-0">東京都+市区町村 横断検索</span>
+            TokyoGovSearch <span className="text-primary font-bold text-xl md:text-3xl block md:inline mt-1 md:mt-0">東京都+市区町村 横断検索</span>
           </h1>
 
           <p className={`text-muted-foreground max-w-2xl transition-all duration-500 ${hasSearched ? 'text-base hidden md:block' : 'text-lg md:text-xl pb-2'}`}>

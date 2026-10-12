@@ -62,7 +62,7 @@ export function Footer() {
                         <div className="p-1.5 bg-white border border-slate-100 rounded-lg shadow-sm">
                             <img
                                 src="/qrcode_hazimeru_net.png"
-                                alt="QR Code for hazimeru.net"
+                                alt="QR Code for TokyoGovSearch"
                                 className="w-16 h-16 opacity-80"
                             />
                         </div>
