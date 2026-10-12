@@ -1,24 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageSquare, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 export function Footer() {
     return (
         <footer className="w-full py-12 text-center text-sm text-muted-foreground border-t mt-auto bg-white flex-shrink-0 font-sans">
             <div className="max-w-5xl mx-auto px-4 space-y-8">
-                {/* Main Links */}
-                <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10">
-                    <a
-                        href="https://forms.gle/sdD4n9DHBGoYXGq16"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-primary hover:underline font-medium bg-primary/5 px-5 py-2.5 rounded-full transition-colors"
-                    >
-                        <MessageSquare className="w-4 h-4" />
-                        サービス改善アンケートにご協力ください
-                    </a>                </div>
-
                 {/* Sub Links */}
                 <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3 text-xs tracking-tight text-slate-500">
                     <div className="flex items-center gap-1">
