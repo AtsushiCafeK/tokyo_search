@@ -43,6 +43,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
+      <head>
+        {/* Google AdSense（next/script だと data-nscript が付き所有権確認で警告されるため素の script を使用） */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2742388425564015"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={inter.className}>
         {/* Google tag (gtag.js) */}
         <Script
