@@ -43,7 +43,10 @@ npm run build   # /out に静的ファイルを生成
 ```
 
 `/out` の中身を FTP でさくらサーバーの公開ディレクトリへアップロードします。  
-デプロイ先: `/home/hazimeru/www/tokyo_search/`
+デプロイ先: `/home/it-libero/www/hazimeru/`
+
+> **アップロード時の注意**: サーバー側の `data/`（`mail_keishicho.json` などcronが更新する蓄積データ）は上書きしないでください。
+> また、FFFTP などで `out` フォルダを開いたままだと、`npm run build` が `EBUSY` で失敗します。
 
 ---
 
@@ -96,10 +99,10 @@ tokyo_search/
 ### さくらサーバー上の構成
 
 ```
-/home/hazimeru/www/tokyo_search/
+/home/it-libero/www/hazimeru/
 ├── data/
 │   └── mail_keishicho.json         # 蓄積マスター（cronが毎日更新）
-├── scripts/
+├── scripts/                        # ※ data/ と同じ階層に置く（スクリプトが ../data を自動で参照する）
 │   ├── update_keishicho.sh         # cron実行スクリプト（chmod 700）
 │   ├── csv_to_json.py              # CSV→JSON変換（chmod 600）
 │   ├── csv_work/                   # 作業用CSV一時置き場（自動生成）
@@ -113,8 +116,26 @@ tokyo_search/
 ### cron 設定（さくらコントロールパネル）
 
 ```
-5 6 * * * bash /home/hazimeru/www/tokyo_search/scripts/update_keishicho.sh
+5 6 * * * bash /home/it-libero/www/hazimeru/scripts/update_keishicho.sh
 ```
+
+### Python の前提（重要）
+
+現在のサーバーの Python は **2.7.18 のみ**（`python3` なし）です。以前のサーバーは Python 3.8.12 でした。
+
+- `csv_to_json.py` と `update_keishicho.sh` は **Python 2.7 / 3 の両対応**です。`python3` があれば優先し、無ければ `python` を自動で使います。使った Python のバージョンは、ログの `Python: ...` の行に出ます。
+- `scripts/` に Python スクリプトを追加するときは、Python 2.7 で動く書き方にしてください（f-string・`typing`・`open(encoding=)` は使えません。`io.open` と `.format` を使います）。
+  `fetch_train_delay.py` と `fetch_fraud_ranking.py` は Python 3 専用です（cron 化する場合は要対応）。
+- 蓄積JSONの場所は、既定で `scripts/` の隣の `data/mail_keishicho.json` です。変える場合は環境変数 `DATA_PATH` で指定できます。
+  Python を明示したい場合は `PYTHON_BIN=/usr/local/bin/python3 bash update_keishicho.sh` のように指定します。
+
+### 更新が止まったとき（トラブルシュート）
+
+- `scripts/logs/update_YYYYMM.log` の末尾を見ます。失敗すると、`エラー終了: ... N 行目付近（終了コード X）` と、原因（curl のエラー文など）が残ります。
+- `python: command not found` → サーバーの Python を確認します（`which python3 python`）。
+- `Permission denied` → `data/` と `mail_keishicho.json` に、cron の実行ユーザーが書き込めるか確認します。
+- 蓄積JSONが壊れて読めないときは、上書きを避けるためエラーで中止します（以前は空から作り直して上書きしていました）。
+- `.sh` は **LF** で置いてください。CRLF だと `bad interpreter` で動きません。
 
 ---
 
@@ -159,7 +180,7 @@ https://www.odpt.org/
 ### cron 設定例（さくらコントロールパネル）
 
 ```
-*/15 * * * * ODPT_KEY=xxxxxxxx bash /home/hazimeru/www/tokyo_search/scripts/update_train_delay.sh
+*/15 * * * * ODPT_KEY=xxxxxxxx bash /home/it-libero/www/hazimeru/scripts/update_train_delay.sh
 ```
 
 ### 段階
@@ -195,7 +216,7 @@ https://www.odpt.org/
 さくらcronで自動化する場合の例（週1回）:
 
 ```
-20 6 * * 1 bash /home/hazimeru/www/tokyo_search/scripts/update_fraud.sh
+20 6 * * 1 bash /home/it-libero/www/hazimeru/scripts/update_fraud.sh
 ```
 
 ### データソースと出典
