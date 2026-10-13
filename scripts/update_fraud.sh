@@ -10,12 +10,12 @@
 #       コンテンツ本体のため、本スクリプトでは更新しない（上書きしない）。
 #
 # cron設定例（さくらコントロールパネル / 週1回 月曜 6:20 想定）:
-#   20 6 * * 1 bash /home/hazimeru/www/tokyo_search/scripts/update_fraud.sh
+#   20 6 * * 1 bash /home/it-libero/www/hazimeru/scripts/update_fraud.sh
 # ==============================================================================
 
 set -euo pipefail
 
-OUT_PATH="/home/hazimeru/www/tokyo_search/data/fraud_ranking.json"
+OUT_PATH="/home/it-libero/www/hazimeru/data/fraud_ranking.json"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LOG_DIR="${SCRIPT_DIR}/logs"
 LOG_FILE="${LOG_DIR}/fraud_$(date '+%Y%m').log"

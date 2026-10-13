@@ -6,7 +6,7 @@
 # 公開ディレクトリの data/train_delay.json を約15分ごとに上書き更新する。
 #
 # cron設定例（さくらコントロールパネル / 15分間隔）:
-#   */15 * * * * ODPT_KEY=xxxxxxxx /bin/bash /home/hazimeru/www/tokyo_search/scripts/update_train_delay.sh
+#   */15 * * * * ODPT_KEY=xxxxxxxx /bin/bash /home/it-libero/www/hazimeru/scripts/update_train_delay.sh
 #
 # ※ ODPT_KEY（コンシューマーキー）はリポジトリに含めず、cron 行の環境変数として渡すこと。
 #   さくらの cron でジョブごとに分刻み実行が可能かは要確認（不可なら最短間隔に合わせる）。
@@ -18,7 +18,7 @@ set -euo pipefail
 # 設定
 # ----------------------------------------------------------------
 # 公開ディレクトリ内の出力先JSON
-OUT_PATH="/home/hazimeru/www/tokyo_search/data/train_delay.json"
+OUT_PATH="/home/it-libero/www/hazimeru/data/train_delay.json"
 
 # 路線マスター（サーバー上の配置に合わせて調整。リポジトリの src/data を配置している場合）
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
